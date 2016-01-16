@@ -1,0 +1,25 @@
+{
+  "name": "house-points-slack-bot",
+  "version": "1.0.0",
+  "description": "A slack bot for keeping track of house points",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tbondwilkinson/house-points-slack-bot.git"
+  },
+  "author": "tbondwilkinson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tbondwilkinson/house-points-slack-bot/issues"
+  },
+  "homepage": "https://github.com/tbondwilkinson/house-points-slack-bot#readme",
+  "dependencies": {
+    "botkit": "0.0.5",
+    "mysql": "^2.10.2",
+    "sequelize": "^3.17.3"
+  }
+}
