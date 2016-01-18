@@ -19,7 +19,9 @@
   "homepage": "https://github.com/tbondwilkinson/house-points-slack-bot#readme",
   "dependencies": {
     "botkit": "0.0.5",
+    "lodash": "^4.0.0",
     "mysql": "^2.10.2",
+    "request": "^2.67.0",
     "sequelize": "^3.17.3"
   }
 }
