@@ -72,12 +72,12 @@ module.exports = function(controller) {
       awardPointsRegExpFor,
       awardPointsRegExpForQuotes,
       awardPointsRegExpNoFor],
-    ['direct_message', 'direct_mention' , 'mention', 'ambient'],
+    ['direct_mention' , 'mention', 'ambient'],
     awardPoints
   );
   controller.hears(
     [awardPointsMentionRegExp, awardPointsMentionRegExpFor],
-    ['direct_message', 'direct_mention', 'mention', 'ambient'],
+    ['direct_mention', 'mention', 'ambient'],
     function(bot, message) {
       console.log('Heard award points with a @mention');
       var matches = message.text.match(/<@(\S+)>/i);
