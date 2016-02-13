@@ -4,31 +4,32 @@ var capitalize = require('lodash/capitalize');
 
 var db = require('../../models');
 
-var awardPointsRegEx =
-'(-?\\d+) points to ([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+)(?: for )?' +
-'([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+)?';
-var awardPointsQuoteRegEx =
-  '(-?\\d+) points to "([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+)"(?: for )?' +
-  '([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+)?';
-var awardPointsMentionRegEx =
-  '(-?\\d+) points to (<@\\S+>)(?: for )?([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+)?';
+var awardPointsRegExpNoFor =
+  '(-?\\d+) points to ([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+)';
+var awardPointsRegExpFor =
+  '(-?\\d+) points to ([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+?)' +
+  '(?: for ([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+))';
+var awardPointsRegExpForQuotes =
+  '(-?\\d+) points to "([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+)"' +
+  '(?: for ([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+))';
+var awardPointsMentionRegExp = '(-?\\d+) points to (<@\\S+>)';
+var awardPointsMentionRegExpFor =
+  '(-?\\d+) points to (<@\\S+>)' +
+  '(?: for ([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+))';
 
 function awardPoints(bot, message) {
-  var matches = message.text.match(new RegExp(
-    awardPointsRegEx, 'i'
-  ));
-  if (matches.length === 0) {
+  if (message.match.length === 0) {
     matches = message.text.match(new RegExp(awardPointsQuoteRegEx), 'i');
   }
   var pointObject = {};
-  if (matches.length >= 3) {
-    pointObject.points = matches[1];
-    pointObject.user = matches[2];
+  if (message.match.length >= 3) {
+    pointObject.points = message.match[1];
+    pointObject.user = message.match[2];
   }
-  if (matches.length > 3) {
-    pointObject.reason = matches[3];
+  if (message.match.length > 3) {
+    pointObject.reason = message.match[3];
   }
-  console.log(matches);
+  console.log(message.match);
   console.log(pointObject);
   if (pointObject.points > 100 || pointObject.points < -100) {
     bot.reply(message,
@@ -67,12 +68,14 @@ function awardPoints(bot, message) {
 
 module.exports = function(controller) {
   controller.hears(
-    [awardPointsRegEx, awardPointsQuoteRegEx],
+    [awardPointsRegExpNoFor,
+      awardPointsMentionRegExpFor,
+      awardPointsRegExpForQuotes],
     ['direct_message', 'direct_mention' , 'mention', 'ambient'],
     awardPoints
   );
   controller.hears(
-    [awardPointsMentionRegEx],
+    [awardPointsMentionRegExp, awardPointsMentionRegExpFor],
     ['direct_message', 'direct_mention', 'mention', 'ambient'],
     function(bot, message) {
       console.log('Heard award points with a @mention');
@@ -90,6 +93,7 @@ module.exports = function(controller) {
           if (body.user !== undefined && body.user.name !== undefined) {
             message.text  = message.text.replace(
               '<@' + userId + '>', capitalize(body.user.name));
+            message.match[2] = capitalize(body.user.name);
             awardPoints(bot, message);
           }
         });
