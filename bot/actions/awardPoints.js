@@ -5,17 +5,17 @@ var capitalize = require('lodash/capitalize');
 var db = require('../../models');
 
 var awardPointsRegExpNoFor =
-  '(-?\\d+) points to ([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+)';
+  '(-?\\d+) points to ([a-zA-Z\'’(){}/~#$%^&*=+\\-_ ]+)';
 var awardPointsRegExpFor =
-  '(-?\\d+) points to ([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+?)' +
-  '(?: for ([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+))';
+  '(-?\\d+) points to ([a-zA-Z\'’(){}/~#$%^&*=+\\-_ ]+?)' +
+  '(?: for ([a-zA-Z\'’(){}/~#$%^&*=+\\-_ ]+))';
 var awardPointsRegExpForQuotes =
-  '(-?\\d+) points to “([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+)”' +
-  '(?: for ([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+))';
+  '(-?\\d+) points to “([a-zA-Z\'’(){}/~#$%^&*=+\\-_ ]+)”' +
+  '(?: for ([a-zA-Z\'’(){}/~#$%^&*=+\\-_ ]+))';
 var awardPointsMentionRegExp = '(-?\\d+) points to (<@\\S+>)';
 var awardPointsMentionRegExpFor =
   '(-?\\d+) points to (<@\\S+>)' +
-  '(?: for ([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+))';
+  '(?: for ([a-zA-Z\'’(){}/~#$%^&*=+\\-_ ]+))';
 
 function awardPoints(bot, message) {
   if (message.match.length === 0) {
