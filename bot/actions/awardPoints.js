@@ -10,7 +10,7 @@ var awardPointsRegExpFor =
   '(-?\\d+) points to ([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+?)' +
   '(?: for ([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+))';
 var awardPointsRegExpForQuotes =
-  '(-?\\d+) points to "([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+)"' +
+  '(-?\\d+) points to “([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+)”' +
   '(?: for ([a-zA-Z\'(){}/~#$%^&*=+\\-_ ]+))';
 var awardPointsMentionRegExp = '(-?\\d+) points to (<@\\S+>)';
 var awardPointsMentionRegExpFor =
@@ -68,9 +68,10 @@ function awardPoints(bot, message) {
 
 module.exports = function(controller) {
   controller.hears(
-    [awardPointsRegExpNoFor,
-      awardPointsMentionRegExpFor,
-      awardPointsRegExpForQuotes],
+    [
+      awardPointsRegExpFor,
+      awardPointsRegExpForQuotes,
+      awardPointsRegExpNoFor],
     ['direct_message', 'direct_mention' , 'mention', 'ambient'],
     awardPoints
   );
